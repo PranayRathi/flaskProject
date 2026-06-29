@@ -2,16 +2,21 @@
   {
     "id": 1,
     "name": "Ada Lovelace",
-    "role": "Analyst"
+    "role": "First Programmer"
   },
   {
     "id": 2,
     "name": "Alan Turing",
-    "role": "Computer Scientist"
+    "role": "Father of Computer Science"
   },
   {
     "id": 3,
     "name": "Grace Hopper",
-    "role": "Computer Scientist"
+    "role": "Compiler Pioneer"
+  },
+  {
+    "id": 4,
+    "name": "Margaret Hamilton",
+    "role": "Software Engineering Pioneer"
   }
 ]
