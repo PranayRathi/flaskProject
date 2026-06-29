@@ -27,8 +27,8 @@ COLLECTION_NAME = os.getenv("MONGODB_COLLECTION", "submissions")
 _client = None
 
 
-def get_collection():
-    """Return the MongoDB collection, creating the client on first use."""
+def get_client():
+    """Return the MongoDB client, creating it on first use."""
     global _client
     if not MONGODB_URI:
         raise RuntimeError(
@@ -37,7 +37,12 @@ def get_collection():
     if _client is None:
         # serverSelectionTimeoutMS keeps failed connections from hanging.
         _client = MongoClient(MONGODB_URI, serverSelectionTimeoutMS=5000)
-    return _client[DB_NAME][COLLECTION_NAME]
+    return _client
+
+
+def get_collection():
+    """Return the form-submissions collection."""
+    return get_client()[DB_NAME][COLLECTION_NAME]
 
 
 # ---------------------------------------------------------------------------
@@ -83,6 +88,28 @@ def form():
 @app.route("/success")
 def success():
     return render_template("success.html")
+
+
+# ---------------------------------------------------------------------------
+# To-Do backend (master_2): accept a To-Do item via POST and store it in MongoDB.
+# ---------------------------------------------------------------------------
+@app.route("/submittodoitem", methods=["POST"])
+def submit_todo_item():
+    item_name = request.form.get("itemName", "").strip()
+    item_description = request.form.get("itemDescription", "").strip()
+
+    if not item_name:
+        return jsonify({"error": "itemName is required."}), 400
+
+    try:
+        todos = get_client()[DB_NAME]["todos"]
+        result = todos.insert_one(
+            {"itemName": item_name, "itemDescription": item_description}
+        )
+    except (PyMongoError, RuntimeError) as exc:
+        return jsonify({"error": str(exc)}), 500
+
+    return jsonify({"status": "saved", "id": str(result.inserted_id)}), 201
 
 
 if __name__ == "__main__":
