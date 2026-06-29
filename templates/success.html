@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 480px; margin: 3rem auto; padding: 0 1rem; text-align: center; }
+        .success { color: #0a7d2c; background: #e6f6ea; padding: 1rem; border-radius: 4px; }
+        a { display: inline-block; margin-top: 1.5rem; }
+    </style>
+</head>
+<body>
+    <p class="success">Data submitted successfully</p>
+    <a href="{{ url_for('form') }}">Submit another</a>
+</body>
+</html>
