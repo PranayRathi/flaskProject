@@ -32,3 +32,16 @@ Then open:
 - API: http://localhost:5001/api
 
 The server auto-reloads when you save changes (debug mode).
+
+## Project structure
+
+```
+flaskProject/
+├── app.py              # Flask routes (/api, form, MongoDB insert)
+├── data.json           # Backend JSON list served by /api
+├── requirements.txt    # Python dependencies
+├── templates/          # HTML templates
+│   ├── form.html
+│   └── success.html
+└── README.md
+```
